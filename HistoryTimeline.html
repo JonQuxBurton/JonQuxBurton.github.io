@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="fabric.min.js"></script>
+</head>
+
+<body>
+    <canvas id="canvas" width="2400" height="5000" style="border:1px solid #000000"></canvas>
+    <script>
+
+/*
+TODO
+Add Civ labels
+DONE Add Background Colour
+DONE Calculate Y position from Year
+
+Try measure text
+DONE Add more Eastern
+Add Circular icon
+
+Add Description, Map, Aritfacts (Paintings, etc)
+*/
+var startYear = 3600;
+
+var screenWidth = 2400;
+        var canvas = new fabric.Canvas('canvas');
+        canvas.backgroundColor = "#dddddd";
+        
+        var timeLineNodes = [];
+
+        var yearHeight = 100;
+        var currentHeight = 0;
+        for (let i = startYear; i > 0; i-=100){
+            timeLineNodes.push({ text: `${i} BC`, location: {x: 0, y: currentHeight}});
+            currentHeight += yearHeight;
+        }
+        for (let i = 0; i <= 200; i+=100){
+            timeLineNodes.push({ text: `${i} AD`, location: {x: 0, y: currentHeight}});
+            currentHeight += yearHeight;
+        }
+        var civMarginWidth = 10;
+        var columnWidth = 195;
+        var column1 = 100;
+        var column2 = column1 + columnWidth;
+        var column3 = column2 + columnWidth;
+        var column4 = column3 + columnWidth;
+        var column5 = column4 + columnWidth;
+
+        var westernNodes = [
+            { year:"2500", text: "Stonehenge built", location: {x: column1}},
+            { year:"2000", yearEnd:"1100", text: "Minoans and Mycenae", location: {x: column1}},
+            { year:"1250", text: "Trojan War", location: {x: column1}},
+            { year:"1100", text: "Bronze Age collapse", location: {x: column1}},
+            { year:"840", text: "Homer's Illiad", location: {x: column1 }},
+            { year:"490", text: "Battle of Marathon", location: {x: column1 }},
+            { year:"480", text: "Battles of Artemisium,\nThermopylae,\nSalamis, Himera", location: {x: column2 }},
+            { year:"431", yearEnd:"404", text: "Peloponnesian War", location: {x: column1 }},
+            { year:"371", text: "Battle of Leuctra", location: {x: column1 }},
+            { year:"362", text: "Battle of Mantinea", location: {x: column2 }},
+            { year:"357", yearEnd:"346",text: "War between Athens\nand Macedonia", location: {x: column3 }},
+            { year:"336", text: "Assassination of Philip II\nof Macedon", location: {x: column4 }},
+            { year:"335", text: "Alexander burns down\nThebes", location: {x: column5 }}
+        ];
+
+        var middleEasternColumn1 =  column5 + columnWidth + civMarginWidth;
+        var middleEasternColumn2 =  middleEasternColumn1 + columnWidth;
+        var middleEasternColumn3 =  middleEasternColumn2 + columnWidth;
+
+        var middleEasternNodes = [
+            { year:"3600", text: "Sumeria", location: {x: middleEasternColumn1 }},            
+            { year:"3500", yearEnd:"2631", text: "Egypt - Old Kingdom", location: {x: middleEasternColumn1 }},            
+            { year:"2872", yearEnd:"2817", text: "Sargon I unites Sumeria and Akkad", location: {x: middleEasternColumn1 }},            
+            { year:"2365", yearEnd:"1800", text: "Egypt - Middle Kingdom", location: {x: middleEasternColumn1 }},            
+            { year:"2169", yearEnd:"1926", text: "Babylonia", location: {x: middleEasternColumn1 }},            
+            { year:"1580", yearEnd:"1100", text: "Egyptian Empire", location: {x: middleEasternColumn1 }},            
+            { year:"1276", text: "Assyrian Empire\nShalmaneser I unifies Assyria", location: {x: middleEasternColumn1 }},            
+            { year:"539", text: "Cyrus takes Babylon and\ncreates the Persian Empire/\nAchaemenid Empire", location: {x: middleEasternColumn1 }},
+            { year:"525", text: "Persian Conquest of Egypt", location: {x: middleEasternColumn2 }},
+            { year:"332", text: "Greek Conquest of Egypt\nFoundation of Alexandria", location: {x: middleEasternColumn1 }},
+            { year:"331", text: "Alexander takes Babylon", location: {x: middleEasternColumn2 }},
+            { year:"330", text: "Battle of Arbela\nNear East becomes part\nof Alexander's Empire", location: {x: middleEasternColumn3 }},
+            
+        ];
+
+        var easternColumn1 =  middleEasternColumn3 + columnWidth + civMarginWidth;
+        var easternColumn2 =  easternColumn1 + columnWidth;
+
+        var easternNodes = [
+            { year:"2100", text: "Xia dynasty", location: {x: easternColumn1 }},
+            { year:"1766", yearEnd:"1123", text: "Shang Dynasty", location: {x: easternColumn1 }},
+            { year:"1122", yearEnd:"255", text: "Zhou Dynasty", location: {x: easternColumn1 }},
+            { year:"770", yearEnd:"255", text: "The Feudal Age", location: {x: easternColumn1 }},
+            { year:"551", yearEnd:"478", text: "Confucius", location: {x: easternColumn1 }},
+            { year:"475", yearEnd:"221", text: "Warring States period", location: {x: easternColumn2 }},
+    ];
+
+var drawStack = [];
+
+var level1FontSize = 24;
+var level2FontSize = 18;
+var level3FontSize = 16;
+var level4FontSize = 14.5;
+var level5FontSize = 12;
+
+
+
+
+westernNodes.forEach(node => {
+    var y = startYear - node.year;
+    
+    var yearText = `${node.year} BC`;
+    
+    if (node.yearEnd) {
+        yearText = `${node.year}-${node.yearEnd} BC`;
+    }
+    
+    var text = `${yearText}\n${node.text}`;
+    var nodeTextBox = makeTextBox(text, node.location.x, y, level4FontSize, 'blue');
+    drawStack.unshift(nodeTextBox.textObject);
+    drawStack.unshift(nodeTextBox.rectObject);  
+});
+
+middleEasternNodes.forEach(node => {
+    var y = startYear - node.year;
+    var yearText = `${node.year} BC`;
+    
+    if (node.yearEnd) {
+        yearText = `${node.year}-${node.yearEnd} BC`;
+    }
+    
+    var text = `${yearText}\n${node.text}`;
+    var nodeTextBox = makeTextBox(text, node.location.x, y, level4FontSize, 'green');
+    drawStack.unshift(nodeTextBox.textObject);
+    drawStack.unshift(nodeTextBox.rectObject);  
+});
+
+easternNodes.forEach(node => {
+    var y = startYear - node.year;
+    var yearText = `${node.year} BC`;
+    
+    if (node.yearEnd) {
+        yearText = `${node.year}-${node.yearEnd} BC`;
+    }
+    
+    var text = `${yearText}\n${node.text}`;
+    var nodeTextBox = makeTextBox(text, node.location.x, y, level4FontSize, 'red');
+    drawStack.unshift(nodeTextBox.textObject);
+    drawStack.unshift(nodeTextBox.rectObject);  
+});
+
+timeLineNodes.forEach(rootNode => {    
+    var nodesTextBox = makeTextBox(rootNode.text, rootNode.location.x, rootNode.location.y, level3FontSize);
+    drawStack.unshift(nodesTextBox.textObject);
+    drawStack.unshift(nodesTextBox.rectObject);  
+    drawStack.unshift(makeLine(0, rootNode.location.y, screenWidth, rootNode.location.y));  
+});
+
+drawStack.forEach(item => {
+    canvas.add(item);
+})
+
+function makeLine(x1, y1, x2, y2) {
+    return new fabric.Line([x1, y1, x2, y2], { 
+            strokeDashArray: [5, 5],
+            stroke: 'white',
+            strokeWidth: 1
+        });
+}
+
+function makeTextBox(text, x, y, fontSize, borderColour) {
+
+    var padding = 5;
+    var textObject = new fabric.Text(text, {
+        fontFamily: "Helvetica",
+        textAlign: "left",
+        fill: 'black',
+        textBackgroundColor: "white",
+        fontSize: fontSize,
+        left: x + padding,
+        top: y + padding
+    });
+    
+
+
+    var rectObject = new fabric.Rect({
+        stroke: borderColour,
+        strokeWidth: 2,
+        fill: 'white',
+        left: textObject.left - padding,
+        top: textObject.top - padding,
+        width: textObject.width + (padding * 2),
+        height: textObject.height + (padding * 2)
+    });
+
+    var centreX = rectObject.left + (rectObject.width / 2)
+    var centreY = rectObject.top + (rectObject.height / 2)
+
+    return { textObject: textObject, rectObject: rectObject, centrePoint: {x: centreX, y: centreY}};
+
+    }
+
+
+    </script>
+</body>
+</html>
