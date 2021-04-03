@@ -6,12 +6,12 @@
 </head>
 
 <body>
-    <canvas id="canvas" width="2600" height="5000" style="border:1px solid #000000"></canvas>
+    <canvas id="canvas" width="2600" height="6000" style="border:1px solid #000000"></canvas>
     <script>
         
         // Config
         var screenWidth = 2800;
-        var screenHeight = 5000;
+        var screenHeight = 6000;
 
         var level1FontSize = 24;
         var level2FontSize = 18;
@@ -22,7 +22,7 @@
         var mainBackgroundColour = "#dddddd";
 
         var startYear = 3700;
-        var endYear = 800;
+        var endYear = 1600;
         var yearDelta = 100;
         var yearHeight = 100;        
         var numberOfColumns = 6;
@@ -105,7 +105,36 @@
             { year: { year: 500, era:"AD"}, yearEnd: { year: 1000, era:"AD"}, text: "Early Middle Ages", column: 0},
             { year: { year: 507, era:"AD"}, text: "Battle of Vouillé", column: 3},
             { year: { year: 602, era:"AD"}, yearEnd: { year: 628, era:"AD"}, text: "Byzantine–Sasanian War", column: 0},
-            { year:{ year: 674, era:"AD"}, yearEnd: { year: 678, era:"AD"}, text: "Siege of Constantinople", column: 0}
+            { year:{ year: 674, era:"AD"}, yearEnd: { year: 678, era:"AD"}, text: "Siege of Constantinople", column: 0},
+            { year:{ year: 719, era:"AD"}, yearEnd: { year: 759, era:"AD"}, text: "Umayyad invasion\nof Gaul", column: 0},
+            { year:{ year: 732, era:"AD"}, text: "Battle of Tours", column: 1},
+            { year:{ year: 793, era:"AD"}, yearEnd: { year: 1066, era:"AD"}, text: "Viking Age", column: 0},
+            { year:{ year: 800, era:"AD"}, yearEnd: { year: 1806, era:"AD"}, text: "Holy Roman Empire", column: 1},
+            { year:{ year: 827, era:"AD"}, yearEnd: { year: 902, era:"AD"}, text: "Muslim conquest of Sicily", column: 2},
+            { year:{ year: 885, era:"AD"}, yearEnd: { year: 886, era:"AD"}, text: "Siege of Paris", column: 0},
+            { year:{ year: 911, era:"AD"}, text: "Duchy of Normandy\nfounded", column: 1},
+            { year:{ year: 937, era:"AD"}, text: "Battle of Brunanburh", column: 2},
+            { year:{ year: 1000, era:"AD"}, yearEnd: { year: 1300, era:"AD"}, text: "High Middle Ages", column: 0},
+            { year:{ year: 1016, era:"AD"}, text: "King Cnut", column: 1},
+            { year:{ year: 1066, era:"AD"}, text: "Battle of Stamford Bridge\nBattle of Hastings\nNorman conquest", column: 0},
+            { year:{ year: 1095, era:"AD"}, yearEnd: { year: 1487, era:"AD"}, text: "The Crusades", column: 0},
+            { year:{ year: 1204, era:"AD"}, text: "Sack of Constantinople", column: 0},
+            { year:{ year: 1212, era:"AD"}, text: "Battle of Bouvines", column: 1},
+            { year:{ year: 1215, era:"AD"}, text: "Magna Carta", column: 2},
+            { year:{ year: 1220, era:"AD"}, yearEnd: { year: 1242, era:"AD"}, text: "Mongol invasion of Europe", column: 3},
+            { year:{ year: 1265, era:"AD"}, yearEnd: { year: 1479, era:"AD"}, text: "Byzantine–Ottoman wars", column: 4},
+            { year:{ year: 1300, era:"AD"}, yearEnd: { year: 1500, era:"AD"}, text: "Late Middle Ages", column: 0},
+            { year:{ year: 1314, era:"AD"}, text: "Battle of Bannockburn", column: 1},
+            { year:{ year: 1337, era:"AD"}, yearEnd: { year: 1453, era:"AD"}, text: "Hundred Years' War", column: 2},
+            { year:{ year: 1347, era:"AD"}, yearEnd: { year: 1351, era:"AD"}, text: "The Black Death", column: 3},
+            { year:{ year: 1400, era:"AD"}, yearEnd: { year: 1600, era:"AD"}, text: "The Renaissance", column: 0},
+            { year:{ year: 1415, era:"AD"}, text: "Battle of Agincourt", column: 1},
+            { year:{ year: 1453, era:"AD"}, text: "Fall of Constantinople", column: 0},
+            { year:{ year: 1455, era:"AD"}, yearEnd: { year: 1487, era:"AD"}, text: "Wars of the Roses", column: 1},
+            { year:{ year: 1485, era:"AD"}, text: "Battle of Bosworth Field", column: 2},
+            { year:{ year: 1492, era:"AD"}, text: "Discovery of the\nNew World", column: 3},
+            { year:{ year: 1494, era:"AD"}, yearEnd: { year: 1559, era:"AD"}, text: "Italian Wars", column: 4}
+
         ];
 
         var middleEasternNodes = [
@@ -124,13 +153,28 @@
             { year:{ year: 330, era:"BC"}, text: "Seleucid Empire", column: 0},
             { year:{ year: 247, era:"BC"}, yearEnd: { year: 224, era:"BC"}, text: "Parthian Empire", column: 0},
             { year:{ year: 64, era:"BC"}, text: "Seleucid Empire turned into a Roman Province", column: 0},
-
             { year:{ year: 224, era:"AD"}, yearEnd: { year: 651, era:"AD"}, text: "Sasanian Empire", column: 0},
             { year:{ year: 632, era:"AD"}, text: "Death of the\nProphet Muhammad", column: 0},
             { year:{ year: 632, era:"AD"}, yearEnd: { year: 661, era:"AD"}, text: "Rashidun Caliphate", column: 1},
             { year:{ year: 656, era:"AD"}, yearEnd: { year: 661, era:"AD"}, text: "First Fitna\n(First Islamic Civil War)", column: 2},
             { year:{ year: 661, era:"AD"}, yearEnd: { year: 750, era:"AD"}, text: "Umayyad Caliphate", column: 3},
             { year:{ year: 680, era:"AD"}, yearEnd: { year: 692, era:"AD"}, text: "Second Fitna\n(Second Islamic Civil War)", column: 4},
+
+            { year:{ year: 711, era:"AD"}, yearEnd: { year: 718, era:"AD"}, text: "Umayyad conquest\nof Hispania", column: 0},
+            { year:{ year: 717, era:"AD"}, yearEnd: { year: 718, era:"AD"}, text: "Siege of Constantinople", column: 1},
+            { year:{ year: 750, era:"AD"}, yearEnd: { year: 1258, era:"AD"}, text: "Abbasid Caliphate", column: 2},
+            { year:{ year: 909, era:"AD"}, yearEnd: { year: 1171, era:"AD"}, text: "Fatimid Caliphate", column: 0},
+            { year:{ year: 929, era:"AD"}, yearEnd: { year: 1031, era:"AD"}, text: "Caliphate of Córdoba", column: 1},
+            { year:{ year: 1037, era:"AD"}, yearEnd: { year: 1194, era:"AD"}, text: "Seljuk Empire", column: 0},
+            { year:{ year: 1174, era:"AD"}, yearEnd: { year: 1193, era:"AD"}, text: "Saladin - Sultan of Egypt and Syria", column: 0},
+            { year:{ year: 1218, era:"AD"}, yearEnd: { year: 1221, era:"AD"}, text: "Mongol conquest of Khwarezmia", column: 0},
+            { year:{ year: 1241, era:"AD"}, yearEnd: { year: 1244, era:"AD"}, text: "Mongol invasions\nof Anatolia", column: 2},
+            { year:{ year: 1258, era:"AD"}, text: "Mongols sack Baghdad", column: 3},
+            { year:{ year: 1260, era:"AD"}, yearEnd: { year: 1323, era:"AD"}, text: "Mongol invasions of the Levant", column: 4},
+            { year:{ year: 1261, era:"AD"}, yearEnd: { year: 1517, era:"AD"}, text: "Abbasid Caliphate", column: 0},
+            { year:{ year: 1299, era:"AD"}, yearEnd: { year: 1923, era:"AD"}, text: "Rise of the\nOttoman Empire", column: 1},
+            { year:{ year: 1303, era:"AD"}, text: "Battle of Marj al-Saffar", column: 2},
+            { year:{ year: 1453, era:"AD"}, yearEnd: { year: 1550, era:"AD"}, text: "Classical Age of the Ottoman Empire", column: 0},
 
         ];
 
@@ -142,13 +186,27 @@
             { year: { year: 551, era:"BC"}, yearEnd: { year: 478, era:"BC"}, text: "Confucius", column: 0},
             { year: { year: 475, era:"BC"}, yearEnd: { year: 221, era:"BC"}, text: "Warring States period", column: 1},
             { year: { year: 221, era:"BC"}, text: "Qin Dynasty", column: 0},
-
             { year: { year: 200, era:"AD"}, yearEnd: { year: 400, era:"AD"}, text: "Tatar invasions", column: 0},
             { year: { year: 221, era:"AD"}, yearEnd: { year: 264, era:"AD"}, text: "Three kingdoms period", column: 1},
             { year: { year: 250, era:"AD"}, yearEnd: { year: 538, era:"AD"}, text: "Kofun period", column: 0},
             { year: { year: 538, era:"AD"}, yearEnd: { year: 710, era:"AD"}, text: "Asuka period", column: 0},
             { year: { year: 618, era:"AD"}, yearEnd: { year: 905, era:"AD"}, text: "T'ang Dynasty", column: 0},
             { year: { year: 710, era:"AD"}, yearEnd: { year: 794, era:"AD"}, text: "Nara period (Heijo Epoch)", column: 0},
+            { year: { year: 794, era:"AD"}, yearEnd: { year: 1185, era:"AD"}, text: "Heian period", column: 0},
+            { year: { year: 1185, era:"AD"}, yearEnd: { year: 1333, era:"AD"}, text: "The Kamakura period", column: 0},
+            { year: { year: 1192, era:"AD"}, text: "Minamoto Yoritomo\ndeclared shōgun", column: 1},
+            { year: { year: 1212, era:"AD"}, text: "Genghis Khan invades China", column: 2},
+            { year: { year: 1260, era:"AD"}, yearEnd: { year: 1368, era:"AD"}, text: "Mongol Dynasty ", column: 0},
+            { year: { year: 1269, era:"AD"}, yearEnd: { year: 1295, era:"AD"}, text: "Kublai Khan", column: 1},
+            { year: { year: 1269, era:"AD"}, yearEnd: { year: 1295, era:"AD"}, text: "Marco Polo", column: 2},
+            { year: { year: 1274, era:"AD"}, text: "First Mongol invasion\nof Japan\nBattle of Bun'ei", column: 3},
+            { year: { year: 1281, era:"AD"}, text: "Second Mongol invasion\nof Japan\nBattle of Kōan", column: 4},
+            { year: { year: 1333, era:"AD"}, text: "Siege of Kamakura", column: 0},
+            { year: { year: 1333, era:"AD"}, yearEnd: { year: 1568, era:"AD"}, text: "Muromachi period ", column: 1},
+            { year: { year: 1368, era:"AD"}, yearEnd: { year: 1644, era:"AD"}, text: "Ming Dynasty ", column: 2},
+            { year: { year: 1467, era:"AD"}, text: "Ōnin War ", column: 0},
+
+
         ];
 
         var civs = [
